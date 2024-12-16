@@ -14,7 +14,7 @@ Icon\?
 .stowrc
 
 # Documentation
-*.md
+.*\.md
 
 # Backup files
 .*~
