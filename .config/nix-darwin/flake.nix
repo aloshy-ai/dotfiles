@@ -42,7 +42,7 @@
     # TODO replace with your own username, system and hostname
     username = "aloshy";
     system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "forge";
+    hostname = "ETHERFORGE";
 
     specialArgs =
       inputs

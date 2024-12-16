@@ -26,3 +26,16 @@ sudo launchctl kickstart -k system/org.nixos.nix-daemon
 
 ---
 
+```sh
+error: Unexpected files in /etc, aborting activation
+The following files have unrecognized content and would be overwritten:
+
+  /etc/bashrc
+  /etc/zshrc
+```
+
+```fix
+sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
+```
+

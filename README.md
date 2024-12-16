@@ -66,13 +66,14 @@ This project is to make my development machine configuration declarative. Ideall
 4. Backup Shell Configs
 
     ```zsh
-    sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin && sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
+    sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+    sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
     ```
 
 5. Install **Nix Darwin**
 
     ```zsh
-    nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake "$(readlink -f ~/.config/nix-darwin)"
+    nix run nix-darwin -- switch --flake "$(readlink -f ~/.config/nix-darwin)"
     ```
 
 6. Rebuild **Nix** with **Darwin**
