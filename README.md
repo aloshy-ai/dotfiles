@@ -51,7 +51,7 @@ This project is to make my development machine configuration declarative. Ideall
     Use the following command to list all `TODO`s and the respective files. Complete them before proceeding to next step.
 
     ```zsh
-    grep -r TODO ~/dotfiles/nix-darwin/*
+    grep -Ri TODO ~/dotfiles
     ```
 
 3. Stage changes on Git
