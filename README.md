@@ -54,8 +54,6 @@ This project is to make my development machine configuration declarative. Ideall
     grep -r TODO ~/dotfiles/nix-darwin/*
     ```
 
-    > ***NOTE:** Use `hostname` command to get the current machine's hostname and replace the corresponding value in `nix-darwin/flake.nix` file*
-
 3. Stage changes on Git
 
    This is important to prevent Not Found error in later steps
