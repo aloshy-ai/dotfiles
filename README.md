@@ -13,7 +13,7 @@ This project is to make my development machine configuration declarative. Ideall
 2. Clone this repo
 
     ```zsh
-    git clone https://github.com/aloshy-ai/dotfiles.git ~
+    git clone https://github.com/aloshy-ai/dotfiles.git ~/dotfiles
     ```
 
 ## Setup **Dotfiles**
