@@ -23,6 +23,8 @@
     act
     docker
     deno
+    direnv
+    nix-direnv
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
