@@ -74,7 +74,7 @@ This project is to make my development machine configuration declarative. Ideall
 5. Install **Nix Darwin**
 
     ```zsh
-    nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake ~/dotfiles/nix-darwin
+    nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake "$(readlink -f ~/.config/nix-darwin)"
     ```
 
 6. Rebuild **Nix** with **Darwin**
@@ -82,5 +82,5 @@ This project is to make my development machine configuration declarative. Ideall
     Open a new terminal and run the following command:
 
     ```zsh
-    darwin-rebuild switch --flake ~/dotfiles/nix-darwin
+    darwin-rebuild switch --flake "$(readlink -f ~/.config/nix-darwin)"
     ```
