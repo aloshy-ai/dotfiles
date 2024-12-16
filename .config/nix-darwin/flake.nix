@@ -42,7 +42,7 @@
     # TODO replace with your own username, system and hostname
     username = "aloshy";
     system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "ETHERFORGE";
+    hostname = "forge";
 
     specialArgs =
       inputs
@@ -56,7 +56,6 @@
         ./modules/nix-core.nix
         ./modules/system.nix
         ./modules/apps.nix
-
         ./modules/host-users.nix
       ];
     };

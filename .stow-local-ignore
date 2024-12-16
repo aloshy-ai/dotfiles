@@ -1,0 +1,27 @@
+# Version control
+.git
+.gitignore
+.gitmodules
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# Stow configuration
+.stowrc
+
+# Documentation
+README.*
+LICENSE.*
+
+# Backup files
+*~
+\#*\#
+*.bak
+
+# Package manager
+node_modules
