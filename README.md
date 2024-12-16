@@ -83,3 +83,9 @@ This project is to make my development machine configuration declarative. Ideall
     ```zsh
     darwin-rebuild switch --flake "$(readlink -f ~/.config/nix-darwin)"
     ```
+
+## Applying `nix` file changes under `~/.config/nix-darwin`
+
+```zsh
+darwin-rebuild switch --flake "$(readlink -f ~/.config/nix-darwin)"
+```
