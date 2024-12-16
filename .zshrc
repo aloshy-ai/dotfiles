@@ -1,25 +1,33 @@
-# Initialize Homebrew
+# HOMEBREW
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Set up PATH
-export PATH="$HOME/bin:$PATH" # Include custom scripts
-export PATH="/Applications/WebStorm.app/Contents/MacOS:$PATH" # Launch WebStorm from the command line
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH" # Enable Postgres CLI tools
-export PATH="/opt/homebrew/opt/rustup/bin:$PATH" # Enable Rust CLI tools
+# PATH ENVS
+export PATH="/Applications/WebStorm.app/Contents/MacOS:$PATH"
+export PATH="/opt/homebrew/opt/mongodb-community@5.0/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
-# Initialize pyenv
+# PYENV
 eval "$(pyenv init --path)"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
-# Initialize Starship prompt
+# BASH PROFILE (IF ANY)
+source ~/.bash_profile
+
+# LOCAL NODE BINARIES OF PWD
+export PATH="./node_modules/.bin:$PATH"
+
+# STARSHIP
 eval "$(starship init zsh)"
 
-# Source ~/.bash_profile if it exists
-[ -f ~/.bash_profile ] && . ~/.bash_profile
+# DIRENV (NIX)
 
-# Alias for copying SSH key
+# RUSTUP
+export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
+
+# COPY ALOSHY KEY BY DEFAULT
 alias ssh-copy-id="ssh-copy-id -i ~/.ssh/aloshy.pub"
 
-# NVM (Node Version Manager) configuration
+# NVM
 export NVM_DIR=/Users/aloshy/.nvm
-[ -s /opt/homebrew/opt/nvm/nvm.sh ] && \. /opt/homebrew/opt/nvm/nvm.sh  # Load NVM
-[ -s /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm ] && \. /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm  # Load NVM completion
+        [ -s /opt/homebrew/opt/nvm/nvm.sh ] && \. /opt/homebrew/opt/nvm/nvm.sh  # This loads nvm
+        [ -s /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm ] && \. /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion

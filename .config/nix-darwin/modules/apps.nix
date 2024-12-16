@@ -20,6 +20,8 @@
   environment.systemPackages = with pkgs; [
     git
     stow
+    act
+    docker
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
