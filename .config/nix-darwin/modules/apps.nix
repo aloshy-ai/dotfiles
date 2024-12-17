@@ -21,7 +21,6 @@
     git
     stow
     act
-    docker
     deno
     direnv
     nix-direnv
@@ -45,15 +44,14 @@
     ];
 
     # `brew install`
-    # TODO Feel free to add your favorite apps here.
     brews = [
       # "aria2"  # download tool
     ];
 
     # `brew install --cask`
-    # TODO Feel free to add your favorite apps here.
     casks = [
-      # "google-chrome"
+      "docker"
+      "chromium"
     ];
   };
 }
