@@ -19,12 +19,13 @@
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
     git
-    stow
     act
-    docker
     deno
     direnv
     nix-direnv
+    flutter
+    viu
+    yadm
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -45,15 +46,14 @@
     ];
 
     # `brew install`
-    # TODO Feel free to add your favorite apps here.
     brews = [
       # "aria2"  # download tool
     ];
 
     # `brew install --cask`
-    # TODO Feel free to add your favorite apps here.
     casks = [
-      # "google-chrome"
+      "docker"
+      "chromium"
     ];
   };
 }

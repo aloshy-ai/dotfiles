@@ -1,0 +1,38 @@
+#!/bin/sh
+
+{
+oops() { # Prevent execution if this script was only partially downloaded
+    echo "$0:" "$@" >&2
+    exit 1
+}
+
+require_util() {
+    command -v "$1" > /dev/null 2>&1 || oops "you do not have '$1' installed, which I need to $2"
+}
+
+install_nix() {
+    echo "Installing Nix package manager..."
+    curl -L https://nixos.org/nix/install | sh -s -- --daemon || oops "failed to install Nix"
+}
+
+source_nix() {
+    echo "Sourcing Nix"
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh || oops "failed to source Nix"
+}
+
+# Check for required utilities
+require_util curl "download and install Nix"
+
+# Install Nix if not already installed
+if ! command -v nix-shell > /dev/null 2>&1; then
+    echo "Nix is not installed. Installing..."
+    install_nix || oops "failed to install Nix"
+fi
+
+# Check nix-shell is available
+require_util nix-shell "run Nix commands"
+
+# Clone dotfiles repository with yadm. The rest of the setup is done by yadm
+nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git" || oops "failed to clone dotfiles repository"
+
+} # End of wrapping
