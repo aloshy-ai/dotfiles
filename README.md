@@ -7,3 +7,10 @@ This project is to make my development machine configuration declarative. Ideall
 sh <(curl -L "https://raw.githubusercontent.com/aloshy-ai/dotfiles/refs/heads/main/scripts/setup")
 ```
 
+
+## Apply Changes
+
+```zsh
+darwin-rebuild switch --flake ~/.config/nix-darwin
+```
+
