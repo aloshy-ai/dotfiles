@@ -19,20 +19,8 @@ export PATH="./node_modules/.bin:$PATH"
 # STARSHIP
 eval "$(starship init zsh)"
 
-# DIRENV SHELL HOOK
-_direnv_hook() {
-  trap -- '' SIGINT
-  eval "$("/run/current-system/sw/bin/direnv" export zsh)"
-  trap - SIGINT
-}
-typeset -ag precmd_functions
-if (( ! ${precmd_functions[(I)_direnv_hook]} )); then
-  precmd_functions=(_direnv_hook $precmd_functions)
-fi
-typeset -ag chpwd_functions
-if (( ! ${chpwd_functions[(I)_direnv_hook]} )); then
-  chpwd_functions=(_direnv_hook $chpwd_functions)
-fi
+# DIRENV
+eval "$(direnv hook bash)"
 
 # RUSTUP
 export PATH="/opt/homebrew/opt/rustup/bin:$PATH"

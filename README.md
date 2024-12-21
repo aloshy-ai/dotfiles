@@ -7,6 +7,11 @@ This project is to make my development machine configuration declarative. Ideall
 sh <(curl -L "https://raw.githubusercontent.com/aloshy-ai/dotfiles/refs/heads/main/scripts/setup")
 ```
 
+## Pull Changes
+
+```zsh
+yadm pull
+```
 
 ## Apply Changes
 
