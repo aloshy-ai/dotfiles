@@ -33,6 +33,6 @@ fi
 require_util nix-shell "run Nix commands"
 
 # Clone dotfiles repository with yadm. The rest of the setup is done by yadm
-nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git" || oops "failed to clone dotfiles repository"
+nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --bootstrap" || oops "failed to clone dotfiles repository"
 
 } # End of wrapping
