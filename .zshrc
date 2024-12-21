@@ -20,7 +20,7 @@ export PATH="./node_modules/.bin:$PATH"
 eval "$(starship init zsh)"
 
 # DIRENV
-eval "$(direnv hook bash)"
+eval "$(direnv hook zsh)"
 
 # RUSTUP
 export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
