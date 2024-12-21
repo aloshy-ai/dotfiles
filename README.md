@@ -2,84 +2,8 @@
 
 This project is to make my development machine configuration declarative. Ideally, this should run on a fresh Mac, right after first login.
 
-## How to use this repo
-
-1. Clone this repo
-
-    ```zsh
-    git clone https://github.com/aloshy-ai/dotfiles.git ~/dotfiles
-    ```
-
-## Setup **Dotfiles**
-
-1. Install **Stow**
-
-    ```zsh
-    brew install stow
-    ```
-
-2. Generate `~/.config` symlinks from `~/dotfiles` using the following command:
-
-    ```zsh
-    cd ~/dotfiles && stow .
-    ```
-
-## Setup **Nix Darwin**
-
-1. Install **Nix**
-
-    Run this command, and follow the instructions
-
-    ```zsh
-    sh <(curl -L https://nixos.org/nix/install)
-    ```
-
-    Open a new terminal after installation and run the following command to test it.
-
-    ```zsh
-    nix-shell -p nix-info --run "nix-info -m"
-    ```
-
-2. Complete **TODO**s
-
-    Use the following command to list all `TODO`s and the respective files. Complete them before proceeding to next step.
-
-    ```zsh
-    grep -Ri TODO ~/dotfiles
-    ```
-
-3. Stage changes on Git
-
-   This is important to prevent Not Found error in later steps
-
-   ```zsh
-   cd ~/dotfiles
-   git add .
-   ```
-
-4. Backup Shell Configs
-
-    ```zsh
-    sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
-    sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
-    ```
-
-5. Install **Nix Darwin**
-
-    ```zsh
-    nix run nix-darwin -- switch --flake "$(readlink -f ~/.config/nix-darwin)"
-    ```
-
-6. Rebuild **Nix** with **Darwin**
-
-    Open a new terminal and run the following command:
-
-    ```zsh
-    darwin-rebuild switch --flake "$(readlink -f ~/.config/nix-darwin)"
-    ```
-
-## Applying `nix` file changes under `~/.config/nix-darwin`
-
+## Install
 ```zsh
-darwin-rebuild switch --flake "$(readlink -f ~/.config/nix-darwin)"
+sh <(curl -L "https://raw.githubusercontent.com/aloshy-ai/dotfiles/refs/heads/main/scripts/setup")
 ```
+

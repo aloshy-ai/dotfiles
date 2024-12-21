@@ -1,2 +1,6 @@
 # Package manager directories
 node_modules
+
+# IDE files
+.vscode
+.idea
