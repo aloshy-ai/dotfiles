@@ -2,15 +2,9 @@
 
 This project is to make my development machine configuration declarative. Ideally, this should run on a fresh Mac, right after first login.
 
-## Prerequisits
+## How to use this repo
 
-1. Install **Homebrew**
-
-    ```zsh
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
-
-2. Clone this repo
+1. Clone this repo
 
     ```zsh
     git clone https://github.com/aloshy-ai/dotfiles.git ~/dotfiles

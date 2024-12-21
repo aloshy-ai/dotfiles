@@ -44,3 +44,5 @@ alias ssh-copy-id="ssh-copy-id -i ~/.ssh/aloshy.pub"
 export NVM_DIR=/Users/aloshy/.nvm
         [ -s /opt/homebrew/opt/nvm/nvm.sh ] && \. /opt/homebrew/opt/nvm/nvm.sh  # This loads nvm
         [ -s /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm ] && \. /opt/homebrew/opt/nvm/etc/bash_completion.d/nvm  # This loads nvm bash_completion
+
+echo "░▒▓█ ZSHRC LOADED █▓▒░"

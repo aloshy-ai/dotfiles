@@ -19,11 +19,13 @@
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
     git
-    stow
     act
     deno
     direnv
     nix-direnv
+    flutter
+    viu
+    yadm
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
