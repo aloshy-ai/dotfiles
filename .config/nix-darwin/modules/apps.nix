@@ -26,6 +26,7 @@
     flutter
     viu
     yadm
+    localsend
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
