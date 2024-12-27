@@ -55,6 +55,7 @@
     casks = [
       "docker"
       "chromium"
+      "framer"
     ];
   };
 }
