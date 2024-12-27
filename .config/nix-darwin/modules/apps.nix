@@ -27,7 +27,6 @@
     viu
     yadm
     localsend
-    pinokio
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
