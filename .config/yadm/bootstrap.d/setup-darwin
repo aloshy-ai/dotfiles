@@ -5,8 +5,8 @@ echo "Setting LocalHostName to ETHERFORGE..."
 scutil --set LocalHostName "ETHERFORGE" // This needs to be matching with hostname set in `.config/nix-darwin/flake.nix`
 echo "Installing homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-echo "Preparing to install Nix Darwin..."
+echo "Preparing to install Nix-Darwin..."
 [ ! -f /etc/bashrc.before-nix-darwin ] && sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
 [ ! -f /etc/zshrc.before-nix-darwin ] && sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
-echo "Installing Nix Darwin..."
+echo "Installing Nix-Darwin..."
 nix run nix-darwin -- switch --flake ~/.config/nix-darwin
