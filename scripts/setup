@@ -56,7 +56,7 @@ install_homebrew() {
 
 setup_dotfiles() {
     echo "Cloning dotfiles..."
-    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --no-bootstrap -w $HOME/dotfiles" || oops "failed to clone dotfiles"
+    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --no-bootstrap" || oops "failed to clone dotfiles"
 
     echo "Making dotfiles executable..."
     chmod +x ~/.config/yadm/bootstrap || oops "failed to make dotfiles executable"
