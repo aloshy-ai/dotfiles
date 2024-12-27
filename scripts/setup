@@ -67,7 +67,10 @@ main() {
     require_util nix-shell "run Nix commands"
 
     echo "Installing dotfiles..."
-    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --bootstrap" || oops "failed to clone dotfiles repository"
+    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git" || oops "failed to clone dotfiles repository"
+
+    echo "Bootstrapping dotfiles..."
+    nix-shell -p yadm --run "yadm bootstrap" || oops "failed to bootstrap dotfiles"
 }
 
 main "$@"
