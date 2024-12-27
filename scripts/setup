@@ -12,11 +12,10 @@ require_util() {
 
 detect_os() {
     case "$(uname -s)" in
-        Linux*)     OS="linux";;
-        Darwin*)    OS="darwin";;
+        Linux*)     echo "linux";;
+        Darwin*)    echo "darwin";;
         *)         oops "unsupported operating system";;
     esac
-    echo "$OS"
 }
 
 find_nix_profile() {
@@ -27,23 +26,14 @@ find_nix_profile() {
     )
 
     for profile in "${profiles[@]}"; do
-        if [ -f "$profile" ]; then
-            echo "$profile"
-            return 0
-        fi
+        [ -f "$profile" ] && { echo "$profile"; return 0; }
     done
     return 1
 }
 
 install_nix() {
     echo "Installing Nix package manager..."
-    OS=$(detect_os)
-
-    if [ "$OS" = "darwin" ]; then
-        curl -L https://nixos.org/nix/install | sh -s -- --darwin-use-unencrypted-nix-store-volume || oops "failed to install Nix on macOS"
-    else
-        curl -L https://nixos.org/nix/install | sh -s -- --daemon || oops "failed to install Nix"
-    fi
+    curl -H "Cache-Control: no-cache" -L https://nixos.org/nix/install | sh -s -- $([ "$(detect_os)" = "darwin" ] && echo "--darwin-use-unencrypted-nix-store-volume" || echo "--daemon") || oops "failed to install Nix"
 }
 
 setup_nix() {
@@ -51,9 +41,28 @@ setup_nix() {
     echo "Sourcing Nix from $NIX_PROFILE"
     # shellcheck disable=SC1090
     . "$NIX_PROFILE" || oops "failed to source Nix"
-
-    # Verify Nix is working
     nix --version >/dev/null 2>&1 || oops "Nix installation appears broken"
+}
+
+install_homebrew() {
+    if command -v brew >/dev/null 2>&1; then
+        echo "Updating homebrew..."
+        brew update || oops "failed to update homebrew"
+    else
+        echo "Installing homebrew..."
+        curl -H "Cache-Control: no-cache" -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | /bin/bash || oops "failed to install homebrew"
+    fi
+}
+
+setup_dotfiles() {
+    echo "Cloning dotfiles..."
+    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --no-bootstrap -w $HOME/dotfiles" || oops "failed to clone dotfiles"
+
+    echo "Making dotfiles executable..."
+    chmod +x ~/.config/yadm/bootstrap || oops "failed to make dotfiles executable"
+
+    echo "Bootstrapping dotfiles..."
+    nix-shell -p yadm --run "yadm bootstrap" || oops "failed to bootstrap dotfiles"
 }
 
 main() {
@@ -66,17 +75,8 @@ main() {
 
     require_util nix-shell "run Nix commands"
 
-    echo "Cloning dotfiles..."
-    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git" || oops "failed to clone dotfiles repository"
-
-    echo "Making dotfiles executable..."
-    chmod +x ~/.config/yadm/bootstrap || oops "failed to make dotfiles executable"
-
-    echo "Installing homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" || oops "failed to install homebrew"
-
-    echo "Bootstrapping dotfiles..."
-    nix-shell -p yadm --run "yadm bootstrap" || oops "failed to bootstrap dotfiles"
+    install_homebrew
+    setup_dotfiles
 }
 
 main "$@"

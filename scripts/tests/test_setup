@@ -14,6 +14,8 @@ declare -A TEST_CASES=(
   ["install-macos"]="Installation on macOS system"
   ["install-linux"]="Installation on Linux system"
   ["install-unsupported-os"]="Installation on unsupported OS"
+  ["install-homebrew"]="Homebrew installation"
+  ["update-homebrew"]="Homebrew update when already installed"
 )
 
 cleanup() {
@@ -26,13 +28,13 @@ setup_test_env() {
   local test_name="$1"
 
   mkdir -p "$MOCK_DIR"/{bin,nix/var/nix/profiles/default/etc/profile.d,etc/profile.d,home/.nix-profile/etc/profile.d}
-
   export PATH="$MOCK_DIR/bin:$PATH"
   export HOME="$MOCK_DIR/home"
 
   create_mock_command "command" 0 ""
   create_mock_command "curl" 0 ""
   create_mock_command "nix" 0 "nix 2.3.0"
+  create_mock_command "chmod" 0 ""
 
   cat > "$MOCK_DIR/bin/uname" << 'EOF'
 #!/bin/sh
@@ -109,10 +111,17 @@ run_test_case() {
       [ $? -eq 1 ] || return 1
       ;;
 
-    "install-custom-repo")
-      export DOTFILES_REPO="https://custom-repo.git"
+    "install-homebrew")
+      create_mock_command "brew" 1 "command not found"
       "$SCRIPT"
-      grep -q "custom-repo.git" "$TEST_DIR"/*.log 2>/dev/null || return 1
+      grep -q "Installing homebrew" "$TEST_DIR"/*.log 2>/dev/null || return 1
+      [ $? -eq 0 ] || return 1
+      ;;
+
+    "update-homebrew")
+      create_mock_command "brew" 0 "Homebrew 3.3.9"
+      "$SCRIPT"
+      grep -q "Updating homebrew" "$TEST_DIR"/*.log 2>/dev/null || return 1
       [ $? -eq 0 ] || return 1
       ;;
 
