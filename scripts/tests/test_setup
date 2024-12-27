@@ -1,166 +1,143 @@
 #!/usr/bin/env bash
 
-# Test environment setup
 TEST_DIR=$(mktemp -d)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)"
 SCRIPT="$SCRIPT_DIR/setup"
 MOCK_DIR="$TEST_DIR/mock"
 
-# Test configuration
-declare -A TEST_CASES
-TEST_CASES=(
+declare -A TEST_CASES=(
   ["install-default"]="Basic installation without existing Nix"
   ["install-with-existing-nix"]="Installation with Nix already present"
   ["install-with-failed-curl"]="Installation with curl failure"
   ["install-as-root"]="Installation attempted as root user"
   ["install-custom-repo"]="Installation with custom dotfiles repository"
+  ["install-macos"]="Installation on macOS system"
+  ["install-linux"]="Installation on Linux system"
+  ["install-unsupported-os"]="Installation on unsupported OS"
 )
 
 cleanup() {
   rm -rf "$TEST_DIR"
-  echo "Cleaned up test environment"
 }
 
 trap cleanup EXIT
 
 setup_test_env() {
   local test_name="$1"
-  
-  # Create mock directories
-  /bin/mkdir -p "$MOCK_DIR/bin"
-  /bin/mkdir -p "$MOCK_DIR/nix/var/nix/profiles/default/etc/profile.d"
-  /bin/mkdir -p "$MOCK_DIR/home/.local/share/yadm"
-  
-  # Set up PATH and HOME
+
+  mkdir -p "$MOCK_DIR"/{bin,nix/var/nix/profiles/default/etc/profile.d,etc/profile.d,home/.nix-profile/etc/profile.d}
+
   export PATH="$MOCK_DIR/bin:$PATH"
   export HOME="$MOCK_DIR/home"
-  
-  # Create basic mock commands
+
   create_mock_command "command" 0 ""
   create_mock_command "curl" 0 ""
-  create_mock_command "mkdir" 0 ""
-  create_mock_command "chmod" 0 ""
-  create_mock_command "ln" 0 ""
-  create_mock_command "tar" 0 ""
-  
-  # Create mock nix installer script
-  cat > "$MOCK_DIR/nix/install" << 'EOF'
-#!/bin/sh
-echo "Mock Nix installer"
-exit 0
-EOF
-  chmod +x "$MOCK_DIR/nix/install"
+  create_mock_command "nix" 0 "nix 2.3.0"
 
-  # Create mock yadm command
-  create_mock_command "yadm" 0 "Cloning repository..."
-  
-  # Create mock id command (non-root by default)
-  cat > "$MOCK_DIR/bin/id" << 'EOF'
+  cat > "$MOCK_DIR/bin/uname" << 'EOF'
 #!/bin/sh
-echo "1000"
+case "$1" in
+  -s) echo "Linux";;
+  *) echo "Linux";;
+esac
 EOF
-  chmod +x "$MOCK_DIR/bin/id"
+  chmod +x "$MOCK_DIR/bin/uname"
+
+  create_mock_command "id" 0 "1000"
 }
 
 create_mock_command() {
   local cmd="$1"
   local exit_code="${2:-0}"
   local output="${3:-}"
-  
-  mkdir -p "$(dirname "$MOCK_DIR/bin/$cmd")"
+
   cat > "$MOCK_DIR/bin/$cmd" << EOF
 #!/bin/sh
 ${output:+echo "$output"}
 exit $exit_code
 EOF
-  /bin/chmod +x "$MOCK_DIR/bin/$cmd"
+  chmod +x "$MOCK_DIR/bin/$cmd"
 }
 
 run_test_case() {
   local test_name="$1"
   local description="$2"
-  
+
   echo "Running test: $test_name - $description"
   setup_test_env "$test_name"
-  
+
   case "$test_name" in
     "install-default")
-      create_mock_command "nix-shell" 0 "Installing yadm..."
       "$SCRIPT"
-      local status=$?
-      [ $status -eq 0 ] || return 1
+      [ $? -eq 0 ] || return 1
       ;;
-      
+
     "install-with-existing-nix")
-      create_mock_command "nix-shell" 0 "Installing yadm..."
       touch "$MOCK_DIR/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-      chmod +x "$MOCK_DIR/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
       "$SCRIPT"
-      local status=$?
-      [ $status -eq 0 ] || return 1
+      [ $? -eq 0 ] || return 1
       ;;
-      
+
     "install-with-failed-curl")
       create_mock_command "curl" 1 "curl: Failed to connect"
       "$SCRIPT"
-      local status=$?
-      [ $status -ne 0 ] || return 1
+      [ $? -eq 1 ] || return 1
       ;;
-      
+
     "install-as-root")
-      cat > "$MOCK_DIR/bin/id" << 'EOF'
-#!/bin/sh
-echo "0"
-EOF
-      chmod +x "$MOCK_DIR/bin/id"
+      create_mock_command "id" 0 "0"
       "$SCRIPT"
-      local status=$?
-      [ $status -eq 1 ] || return 1
+      [ $? -eq 1 ] || return 1
       ;;
-      
+
+    "install-macos")
+      create_mock_command "uname" 0 "Darwin"
+      "$SCRIPT"
+      grep -q "darwin-use-unencrypted-nix-store-volume" "$TEST_DIR"/*.log 2>/dev/null || return 1
+      [ $? -eq 0 ] || return 1
+      ;;
+
+    "install-linux")
+      create_mock_command "uname" 0 "Linux"
+      "$SCRIPT"
+      [ $? -eq 0 ] || return 1
+      ;;
+
+    "install-unsupported-os")
+      create_mock_command "uname" 0 "FreeBSD"
+      "$SCRIPT"
+      [ $? -eq 1 ] || return 1
+      ;;
+
     "install-custom-repo")
-      create_mock_command "nix-shell" 0 "Installing yadm..."
-      create_mock_command "yadm" 0 "Cloning custom repository..."
       export DOTFILES_REPO="https://custom-repo.git"
       "$SCRIPT"
-      local status=$?
       grep -q "custom-repo.git" "$TEST_DIR"/*.log 2>/dev/null || return 1
-      [ $status -eq 0 ] || return 1
+      [ $? -eq 0 ] || return 1
       ;;
-      
+
     *)
       echo "Unknown test case: $test_name"
       return 1
       ;;
   esac
-  
-  return 0
 }
 
-# Main test runner
 main() {
-  local failed_tests=0
-  local total_tests=0
-  
-  echo "Starting test suite..."
-  
+  local failed=0
+  local total=${#TEST_CASES[@]}
+
   for test_name in "${!TEST_CASES[@]}"; do
-    ((total_tests++))
     if run_test_case "$test_name" "${TEST_CASES[$test_name]}" 2>&1 | tee "$TEST_DIR/${test_name}.log"; then
-      echo "✓ Test passed: $test_name"
+      echo "✓ $test_name"
     else
-      echo "✗ Test failed: $test_name"
-      ((failed_tests++))
+      echo "✗ $test_name"
+      ((failed++))
     fi
-    echo "----------------------------------------"
   done
-  
-  echo "Test summary:"
-  echo "Total tests: $total_tests"
-  echo "Passed: $((total_tests - failed_tests))"
-  echo "Failed: $failed_tests"
-  
-  return $failed_tests
+
+  echo "Tests: $((total - failed))/$total passed"
+  return $failed
 }
 
 main "$@"

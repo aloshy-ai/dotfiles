@@ -1,7 +1,7 @@
 #!/bin/sh
 
 {
-oops() { # Prevent execution if this script was only partially downloaded
+oops() {
     echo "$0:" "$@" >&2
     exit 1
 }
@@ -10,29 +10,66 @@ require_util() {
     command -v "$1" > /dev/null 2>&1 || oops "you do not have '$1' installed, which I need to $2"
 }
 
+detect_os() {
+    case "$(uname -s)" in
+        Linux*)     OS="linux";;
+        Darwin*)    OS="darwin";;
+        *)         oops "unsupported operating system";;
+    esac
+    echo "$OS"
+}
+
+find_nix_profile() {
+    local profiles=(
+        "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+        "/etc/profile.d/nix.sh"
+        "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    )
+
+    for profile in "${profiles[@]}"; do
+        if [ -f "$profile" ]; then
+            echo "$profile"
+            return 0
+        fi
+    done
+    return 1
+}
+
 install_nix() {
     echo "Installing Nix package manager..."
-    curl -L https://nixos.org/nix/install | sh -s -- --daemon || oops "failed to install Nix"
+    OS=$(detect_os)
+
+    if [ "$OS" = "darwin" ]; then
+        curl -L https://nixos.org/nix/install | sh -s -- --darwin-use-unencrypted-nix-store-volume || oops "failed to install Nix on macOS"
+    else
+        curl -L https://nixos.org/nix/install | sh -s -- --daemon || oops "failed to install Nix"
+    fi
 }
 
-source_nix() {
-    echo "Sourcing Nix"
-    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh || oops "failed to source Nix"
+setup_nix() {
+    NIX_PROFILE=$(find_nix_profile) || oops "could not find Nix profile"
+    echo "Sourcing Nix from $NIX_PROFILE"
+    # shellcheck disable=SC1090
+    . "$NIX_PROFILE" || oops "failed to source Nix"
+
+    # Verify Nix is working
+    nix --version >/dev/null 2>&1 || oops "Nix installation appears broken"
 }
 
-# Check for required utilities
-require_util curl "download and install Nix"
+main() {
+    require_util curl "download and install Nix"
 
-# Install Nix if not already installed
-if ! command -v nix-shell > /dev/null 2>&1; then
-    echo "Nix is not installed. Installing..."
-    install_nix || oops "failed to install Nix"
-fi
+    if ! command -v nix-shell > /dev/null 2>&1; then
+        install_nix
+        setup_nix
+    fi
 
-# Check nix-shell is available
-require_util nix-shell "run Nix commands"
+    require_util nix-shell "run Nix commands"
 
-# Clone dotfiles repository with yadm. The rest of the setup is done by yadm
-nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --bootstrap" || oops "failed to clone dotfiles repository"
+    echo "Installing dotfiles..."
+    nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git --bootstrap" || oops "failed to clone dotfiles repository"
+}
+
+main "$@"
 
 } # End of wrapping
