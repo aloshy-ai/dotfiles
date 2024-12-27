@@ -70,7 +70,7 @@ main() {
     nix-shell -p yadm --run "yadm clone -f https://github.com/aloshy-ai/dotfiles.git" || oops "failed to clone dotfiles repository"
 
     echo "Making dotfiles executable..."
-    nix-shell -p yadm --run "chmod +x ~/.config/yadm/bootstrap" || oops "failed to make dotfiles executable"
+    chmod +x ~/.config/yadm/bootstrap || oops "failed to make dotfiles executable"
 
     echo "Bootstrapping dotfiles..."
     nix-shell -p yadm --run "yadm bootstrap" || oops "failed to bootstrap dotfiles"
