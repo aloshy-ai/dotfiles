@@ -72,6 +72,9 @@ main() {
     echo "Making dotfiles executable..."
     chmod +x ~/.config/yadm/bootstrap || oops "failed to make dotfiles executable"
 
+    echo "Installing homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" || oops "failed to install homebrew"
+
     echo "Bootstrapping dotfiles..."
     nix-shell -p yadm --run "yadm bootstrap" || oops "failed to bootstrap dotfiles"
 }
