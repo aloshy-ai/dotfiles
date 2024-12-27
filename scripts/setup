@@ -50,7 +50,7 @@ install_homebrew() {
         brew update || oops "failed to update homebrew"
     else
         echo "Installing homebrew..."
-        curl -H "Cache-Control: no-cache" -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | /bin/bash || oops "failed to install homebrew"
+        curl -H "Cache-Control: no-cache" -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh -c || oops "failed to install homebrew"
     fi
 }
 
