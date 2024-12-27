@@ -43,7 +43,7 @@
     username = "aloshy"; # TODO: replace with your username (Command: `whoami`)
     useremail = "noreply@aloshy.ai"; # TODO: replace with your email (Command: `email=$(git config user.email || defaults read MobileMeAccounts | grep -oE 'AccountID = "[^"]+"' | cut -d'"' -f2); while ! nix-shell -p python312Packages.pyisemail --run "python3 -c 'from pyisemail import is_email; print(is_email(\"$email\"))'" | grep -q "True"; do read -p "Enter a valid email: " email; done; echo $email`)
     system = "aarch64-darwin"; # TODO: replace with your system (Command: `uname -m | sed 's/arm64/aarch64-darwin/;s/x86_64/x86_64-darwin/'`)
-    hostname = "ETHERFORGE"; # TODO: replace with your hostname. Set the same hostname in `.config/yadm/bootstrap.d/set-nix-darwin` too. (Command: `scutil --get LocalHostName`)
+    hostname = "ETHERFORGE"; # TODO: replace with your hostname. Set the same hostname in `.config/yadm/bootstrap.d/setup-darwin` too. (Command: `scutil --get LocalHostName`)
 
     specialArgs =
       inputs
