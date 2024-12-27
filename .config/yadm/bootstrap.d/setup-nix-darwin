@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Set up Nix Darwin
+scutil --set LocalHostName "ETHERFORGE" // This needs to be matching with hostname set in `.config/nix-darwin/flake.nix`
 [ ! -f /etc/bashrc.before-nix-darwin ] && sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
 [ ! -f /etc/zshrc.before-nix-darwin ] && sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
 nix run nix-darwin -- switch --flake ~/.config/nix-darwin
