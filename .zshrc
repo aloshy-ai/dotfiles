@@ -8,7 +8,6 @@ export PATH="$HOME/bin:$PATH"
 
 # PYENV
 eval "$(pyenv init --path)"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # BASH PROFILE (IF ANY)
 source ~/.bash_profile
