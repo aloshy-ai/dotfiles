@@ -64,6 +64,11 @@ let name = "aloshy.🅰🅸";
     '';
   };
 
+  starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   git = {
     enable = true;
     ignores = [ "*.swp" ];
@@ -207,7 +212,7 @@ let name = "aloshy.🅰🅸";
      };
 
   alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       cursor = {
         style = "Block";
