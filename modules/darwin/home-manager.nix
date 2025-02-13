@@ -2,11 +2,6 @@
 
 let
   user = "aloshy";
-  # Define the content of your file as a derivation
-  myEmacsLauncher = pkgs.writeScript "emacs-launcher.command" ''
-    #!/bin/sh
-    emacsclient -c -n &
-  '';
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
@@ -56,7 +51,6 @@ in
         file = lib.mkMerge [
           sharedFiles
           additionalFiles
-          { "emacs-launcher.command".source = myEmacsLauncher; }
         ];
 
         stateVersion = "23.11";
@@ -84,10 +78,6 @@ in
         # { path = "/System/Applications/Photo Booth.app/"; }
         # { path = "/System/Applications/TV.app/"; }
         # { path = "/System/Applications/Home.app/"; }
-        # {
-        #   path = toString myEmacsLauncher;
-        #   section = "others";
-        # }
         # {
         #   path = "${config.users.users.${user}.home}/.local/share/";
         #   section = "others";

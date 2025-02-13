@@ -26,7 +26,6 @@ with pkgs; [
   docker-compose
 
   # Media-related packages
-  emacs-all-the-icons-fonts
   dejavu_fonts
   ffmpeg
   fd
@@ -35,6 +34,15 @@ with pkgs; [
   noto-fonts
   noto-fonts-emoji
   meslo-lgs-nf
+
+  # Nerd fonts
+  nerd-fonts.jetbrains-mono
+  nerd-fonts.symbols-only
+  nerd-fonts.fira-code
+  nerd-fonts.sauce-code-pro
+  nerd-fonts.roboto-mono
+  nerd-fonts.iosevka
+  nerd-fonts.droid-sans-mono
 
   # Development tools
   nodePackages.npm # globally install npm
