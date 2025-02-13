@@ -235,10 +235,10 @@ let name = "aloshy.🅰🅸";
       dynamic_padding = true;
       decorations = "full";
       title = "Terminal";
-      class = {
-        instance = "Alacritty";
-        general = "Alacritty";
-      };
+      # class = {
+      #   instance = "Alacritty";
+      #   general = "Alacritty";
+      # };
 
       colors = {
         primary = {
