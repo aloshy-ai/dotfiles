@@ -39,9 +39,14 @@ let user = "aloshy"; in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; [
-    agenix.packages."${pkgs.system}".default
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment = {
+    systemPackages = with pkgs; [
+      agenix.packages."${pkgs.system}".default
+    ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
+    variables = {
+      DOCKER_HOST = "unix:///$HOME/.colima/docker.sock";
+    };
+  };
 
   system = {
     stateVersion = 4;

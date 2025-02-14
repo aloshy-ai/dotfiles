@@ -18,11 +18,7 @@ with pkgs; [
   yubikey-agent
   age-plugin-yubikey
   gnupg
-  libfido2
-
-  # Cloud-related tools and SDKs
-  docker
-  docker-compose
+  libfido2  
 
   # Media-related packages
   ffmpeg
@@ -42,6 +38,9 @@ with pkgs; [
   nodePackages.prettier
   nodejs
   devbox
+  act
+  docker
+  docker-compose
 
   # Text and terminal utilities
   htop
