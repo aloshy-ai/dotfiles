@@ -56,7 +56,6 @@ with pkgs; [
   iftop
   jetbrains-mono
   jq
-  ripgrep
   tree
   unrar
   unzip

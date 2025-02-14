@@ -9,8 +9,7 @@ let name = "aloshy.🅰🅸";
     enable = true;
     autocd = false;
     cdpath = [ "~/.local/share/src" ];
-    plugins = [
-    ];
+    plugins = [];
     initExtraFirst = ''
       if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
@@ -23,16 +22,10 @@ let name = "aloshy.🅰🅸";
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"
 
-      # Ripgrep alias
-      alias search=rg -p --glob '!node_modules/*'  $@
-
       # nix shortcuts
       shell() {
           nix-shell '<nixpkgs>' -A "$1"
       }
-
-      # Use difftastic, syntax-aware diffing
-      alias diff=difft
 
       # Always color ls and group directories
       alias ls='ls --color=auto'
