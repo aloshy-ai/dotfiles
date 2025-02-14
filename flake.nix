@@ -39,7 +39,6 @@
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-
       devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         default = with pkgs; mkShell {
           nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
@@ -48,7 +47,6 @@
           '';
         };
       };
-
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
@@ -58,7 +56,6 @@
           exec ${self}/apps/${system}/${scriptName}
         '')}/bin/${scriptName}";
       };
-
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
         "build-switch" = mkApp "build-switch" system;
@@ -68,7 +65,6 @@
         "install" = mkApp "install" system;
         "install-with-secrets" = mkApp "install-with-secrets" system;
       };
-
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;
@@ -122,21 +118,6 @@
             };
           }
           ./hosts/nixos
-          # Cross-compilation setup
-          ({ lib, pkgs, ... }: {
-            crossSystem = {
-              # Cross-compile for aarch64-linux on x86_64-linux
-              aarch64-linux = {
-                config = "aarch64-unknown-linux-gnu";
-                system = "aarch64-linux";
-              };
-              # Cross-compile for x86_64-linux on aarch64-linux
-              x86_64-linux = {
-                config = "x86_64-unknown-linux-gnu";
-                system = "x86_64-linux";
-              };
-            }.${system} or null;
-          })
         ];
      });
   };
