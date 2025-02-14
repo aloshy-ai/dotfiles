@@ -122,14 +122,20 @@
             };
           }
           ./hosts/nixos
-          # Conditionally enable QEMU emulation for aarch64-linux if the host is not aarch64-linux
+          # Cross-compilation setup
           ({ lib, pkgs, ... }: {
-            boot.binfmt.emulatedSystems = lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") "aarch64-linux";
-          })
-
-          # Conditionally enable QEMU emulation for x86_64-linux if the host is not x86_64-linux
-          ({ lib, pkgs, ... }: {
-            boot.binfmt.emulatedSystems = lib.optional (pkgs.stdenv.hostPlatform.system != "x86_64-linux") "x86_64-linux";
+            crossSystem = {
+              # Cross-compile for aarch64-linux on x86_64-linux
+              aarch64-linux = {
+                config = "aarch64-unknown-linux-gnu";
+                system = "aarch64-linux";
+              };
+              # Cross-compile for x86_64-linux on aarch64-linux
+              x86_64-linux = {
+                config = "x86_64-unknown-linux-gnu";
+                system = "x86_64-linux";
+              };
+            }.${system} or null;
           })
         ];
      });
