@@ -27,9 +27,6 @@ shared-packages ++ [
   pavucontrol # Pulse audio controls
 
   # Testing and development tools
-  rofi
-  rofi-calc
-  postgresql
 
   # Screenshot and recording tools
   flameshot
