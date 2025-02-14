@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, mac-app-util, ... }:
 
 let
   user = "aloshy";
