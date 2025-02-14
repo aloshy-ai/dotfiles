@@ -2,6 +2,7 @@
 
 with pkgs; [
   # General packages for development and system management
+  bash-completion
   btop
   coreutils-full
   inetutils
