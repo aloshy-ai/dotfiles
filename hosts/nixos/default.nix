@@ -57,9 +57,6 @@ let user = "aloshy";
   programs = {
     gnupg.agent.enable = true;
 
-    # Needed for anything GTK related
-    dconf.enable = true;
-
     # My shell
     zsh.enable = true;
   };
@@ -69,24 +66,8 @@ let user = "aloshy";
     openssh.enable = true;
   };
 
-  # Enable CUPS to print documents
-  # services.printing.enable = true;
-  # services.printing.drivers = [ pkgs.brlaser ]; # Brother printer driver
-
-  # Enable sound
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
   # Video support
   hardware = {
-    # opengl.enable = true;
-    # nvidia.modesetting.enable = true;
-
-    # Enable Xbox support
-    # xone.enable = true;
-
-    # Crypto wallet support
-    ledger.enable = true;
   };
 
 

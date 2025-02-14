@@ -16,26 +16,8 @@ in
     stateVersion = "21.05";
   };
 
-  # Use a dark theme
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "Adwaita-dark";
-      package = pkgs.adwaita-icon-theme;
-    };
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.adwaita-icon-theme;
-    };
-  };
-
   # Screen lock
   services = {
-    screen-locker = {
-      enable = true;
-      inactiveInterval = 10;
-    };
-
     # Auto mount devices
     udiskie.enable = true;
   };

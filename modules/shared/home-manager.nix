@@ -29,6 +29,9 @@ let name = "aloshy.🅰🅸";
 
       # Always color ls and group directories
       alias ls='ls --color=auto'
+
+      # ASCII Art 
+      neofetch --ascii "$(curl -fsSL https://ascii.aloshy.ai | sh)"  --color_blocks off --disable kernel uptime packages shell de wm wm_theme resolution gpu memory term term_font theme model cpu
     '';
   };
 
