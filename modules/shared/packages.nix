@@ -2,10 +2,7 @@
 
 with pkgs; [
   # General packages for development and system management
-  aspell
-  aspellDicts.en
   bash-completion
-  bat
   btop
   coreutils
   killall
@@ -17,6 +14,7 @@ with pkgs; [
 
   # Encryption and security tools
   age
+  yubikey-agent
   age-plugin-yubikey
   gnupg
   libfido2
@@ -26,14 +24,8 @@ with pkgs; [
   docker-compose
 
   # Media-related packages
-  dejavu_fonts
   ffmpeg
-  fd
   font-awesome
-  hack-font
-  noto-fonts
-  noto-fonts-emoji
-  meslo-lgs-nf
 
   # Nerd fonts
   nerd-fonts.jetbrains-mono
@@ -52,14 +44,10 @@ with pkgs; [
 
   # Text and terminal utilities
   htop
-  hunspell
-  iftop
-  jetbrains-mono
   jq
   tree
   unrar
   unzip
-  zsh-powerlevel10k
 
   # Python packages
   python3

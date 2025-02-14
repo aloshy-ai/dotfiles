@@ -147,9 +147,7 @@ let user = "aloshy";
         animation-for-menu-window = "none";
         animation-for-transient-window = "slide-down";
         corner-radius = 12;
-        rounded-corners-exclude = [
-          "class_g = 'i3lock'"
-        ];
+        rounded-corners-exclude = [];
         round-borders = 3;
         round-borders-exclude = [];
         round-borders-rule = [];
@@ -166,9 +164,7 @@ let user = "aloshy";
         focus-exclude = [
         ];
 
-        opacity-rule = [
-          "100:class_g = 'i3lock'"
-        ];
+        opacity-rule = [];
 
         blur-kern = "3x3box";
         blur = {
@@ -269,11 +265,7 @@ let user = "aloshy";
   };
 
   fonts.packages = with pkgs; [
-    dejavu_fonts
     feather-font # from overlay
-    font-awesome
-    nerd-fonts.noto
-    noto-fonts-emoji
   ];
 
   environment.systemPackages = with pkgs; [

@@ -152,37 +152,8 @@ let
     super + Tab
           bspc {node,desktop} -f last
 
-    # Keepass XC
-    super + shift + x
-          /etc/profiles/per-user/${user}/bin/keepassxc
-
     # Web browser
     ctrl + alt + Return
          google-chrome-stable
-
-    # File browser at home dir
-    super + shift + @space
-         pcmanfm
-
-    # Take a screenshot with PrintSc
-    Print
-         flameshot gui -c -p $HOME/.local/share/img/screenshots
-
-    # Lock the screen
-    ctrl + alt + BackSpace
-         i3lock
-
-    # Audio controls for + volume
-    XF86AudioRaiseVolume
-        pactl set-sink-volume @DEFAULT_SINK@ +5%
-
-    # Audio controls for - volume
-    XF86AudioLowerVolume
-        pactl set-sink-volume @DEFAULT_SINK@ -5%
-
-    # Audio controls for mute
-    XF86AudioMute
-        pactl set-sink-mute @DEFAULT_SINK@ toggle
-    '';
   };
 }
