@@ -39,6 +39,15 @@
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+
+      # Cross-compilation setup for aarch64-linux
+      crossSystem = system: {
+        aarch64-linux = {
+          config = "aarch64-unknown-linux-gnu";
+          system = "aarch64-linux";
+        };
+      }.${system} or null;
+
       devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
         default = with pkgs; mkShell {
           nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
@@ -118,9 +127,6 @@
             };
           }
           ./hosts/nixos
-          {
-            boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-          }
         ];
      });
   };
