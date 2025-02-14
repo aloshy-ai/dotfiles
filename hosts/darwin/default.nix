@@ -44,7 +44,6 @@ let user = "aloshy"; in
       agenix.packages."${pkgs.system}".default
     ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
     variables = {
-      DOCKER_HOST = "unix:///$HOME/.colima/docker.sock";
     };
   };
 

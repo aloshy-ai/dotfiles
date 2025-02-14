@@ -1,3 +1,6 @@
 {
-  "recommendations": ["sanjulaganepola.github-local-actions"]
+  "recommendations": [
+    "sanjulaganepola.github-local-actions",
+    "fuadpashayev.bottom-terminal"
+  ]
 }

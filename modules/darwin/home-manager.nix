@@ -31,6 +31,10 @@ in
           sharedFiles
           additionalFiles
         ];
+        sessionVariables = {
+          DIRENV_LOG_FORMAT = "";
+          DOCKER_HOST = "unix:///$HOME/.colima/docker.sock";
+        };
 
         stateVersion = "23.11";
       };

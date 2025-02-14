@@ -9,5 +9,4 @@ shared-packages ++ [
   syncthing
   telegram-desktop
   zoom-us
-  colima
 ]
