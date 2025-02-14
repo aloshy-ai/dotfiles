@@ -8,7 +8,7 @@ in
 {
   imports = [
    ./dock
-   ./
+   ./homebrew
   ];
 
   # It me
@@ -21,6 +21,7 @@ in
 
   # Enable home-manager
   home-manager = {
+    backupFileExtension = "backup";
     useGlobalPkgs = true;
     users.${user} = { pkgs, config, lib, ... }:{
       home = {

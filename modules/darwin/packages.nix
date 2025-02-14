@@ -7,7 +7,6 @@ shared-packages ++ [
   utm
   colima
   brave
-  freetube
   syncthing
   telegram-desktop
   zoom-us
