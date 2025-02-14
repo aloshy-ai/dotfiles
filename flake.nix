@@ -126,6 +126,11 @@
           ({ lib, pkgs, ... }: {
             boot.binfmt.emulatedSystems = lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") "aarch64-linux";
           })
+
+          # Conditionally enable QEMU emulation for x86_64-linux if the host is not x86_64-linux
+          ({ lib, pkgs, ... }: {
+            boot.binfmt.emulatedSystems = lib.optional (pkgs.stdenv.hostPlatform.system != "x86_64-linux") "x86_64-linux";
+          })
         ];
      });
   };
