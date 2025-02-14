@@ -148,7 +148,6 @@ let user = "aloshy";
         animation-for-transient-window = "slide-down";
         corner-radius = 12;
         rounded-corners-exclude = [
-          "class_i = 'polybar'"
           "class_g = 'i3lock'"
         ];
         round-borders = 3;
@@ -169,7 +168,6 @@ let user = "aloshy";
 
         opacity-rule = [
           "100:class_g = 'i3lock'"
-          "60:class_g = 'Dunst'"
         ];
 
         blur-kern = "3x3box";
@@ -183,11 +181,9 @@ let user = "aloshy";
         };
 
         shadow-exclude = [
-          "class_g = 'Dunst'"
         ];
 
         blur-background-exclude = [
-          "class_g = 'Dunst'"
         ];
 
         backend = "glx";
