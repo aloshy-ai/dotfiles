@@ -65,147 +65,8 @@ let user = "aloshy";
   };
 
   services = {
-    xserver = {
-      enable = true;
-
-      # Uncomment these for AMD or Nvidia GPU
-      # videoDrivers = [ "amdgpu" ];
-      # videoDrivers = [ "nvidia" ];
-
-      # Uncomment this for Nvidia GPU
-      # This helps fix tearing of windows for Nvidia cards
-      # services.xserver.screenSection = ''
-      #   Option       "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-      #   Option       "AllowIndirectGLXProtocol" "off"
-      #   Option       "TripleBuffer" "on"
-      # '';
-
-      # LightDM Display Manager
-      displayManager.defaultSession = "none+bspwm";
-      displayManager.lightdm = {
-        enable = true;
-        greeters.slick.enable = true;
-        background = ../../modules/nixos/config/login-wallpaper.png;
-      };
-
-      # Tiling window manager
-      windowManager.bspwm = {
-        enable = true;
-      };
-
-      # Turn Caps Lock into Ctrl
-      layout = "us";
-      xkbOptions = "ctrl:nocaps";
-
-      # Better support for general peripherals
-      libinput.enable = true;
-    };
-
     # Let's be able to SSH into this machine
     openssh.enable = true;
-
-    # Sync state between machines
-    # Sync state between machines
-    syncthing = {
-      enable = true;
-      openDefaultPorts = true;
-      dataDir = "/home/${user}/.local/share/syncthing";
-      configDir = "/home/${user}/.config/syncthing";
-      user = "${user}";
-      group = "users";
-      guiAddress = "127.0.0.1:8384";
-      overrideFolders = true;
-      overrideDevices = true;
-
-      settings = {
-        devices = {};
-        options.globalAnnounceEnabled = false; # Only sync on LAN
-      };
-    };
-
-    # Picom, my window compositor with fancy effects
-    #
-    # Notes on writing exclude rules:
-    #
-    #   class_g looks up index 1 in WM_CLASS value for an application
-    #   class_i looks up index 0
-    #
-    #   To find the value for a specific application, use `xprop` at the
-    #   terminal and then click on a window of the application in question
-    #
-    picom = {
-      enable = true;
-      settings = {
-        animations = true;
-        animation-stiffness = 300.0;
-        animation-dampening = 35.0;
-        animation-clamping = false;
-        animation-mass = 1;
-        animation-for-workspace-switch-in = "auto";
-        animation-for-workspace-switch-out = "auto";
-        animation-for-open-window = "slide-down";
-        animation-for-menu-window = "none";
-        animation-for-transient-window = "slide-down";
-        corner-radius = 12;
-        rounded-corners-exclude = [];
-        round-borders = 3;
-        round-borders-exclude = [];
-        round-borders-rule = [];
-        shadow = true;
-        shadow-radius = 8;
-        shadow-opacity = 0.4;
-        shadow-offset-x = -8;
-        shadow-offset-y = -8;
-        fading = false;
-        inactive-opacity = 0.8;
-        frame-opacity = 0.7;
-        inactive-opacity-override = false;
-        active-opacity = 1.0;
-        focus-exclude = [
-        ];
-
-        opacity-rule = [];
-
-        blur-kern = "3x3box";
-        blur = {
-          method = "kernel";
-          strength = 8;
-          background = false;
-          background-frame = false;
-          background-fixed = false;
-          kern = "3x3box";
-        };
-
-        shadow-exclude = [
-        ];
-
-        blur-background-exclude = [
-        ];
-
-        backend = "glx";
-        vsync = false;
-        mark-wmwin-focused = true;
-        mark-ovredir-focused = true;
-        detect-rounded-corners = true;
-        detect-client-opacity = false;
-        detect-transient = true;
-        detect-client-leader = true;
-        use-damage = true;
-        log-level = "info";
-
-        wintypes = {
-          normal = { fade = true; shadow = false; };
-          tooltip = { fade = true; shadow = false; opacity = 0.75; focus = true; full-shadow = false; };
-          dock = { shadow = false; };
-          dnd = { shadow = false; };
-          popup_menu = { opacity = 1.0; };
-          dropdown_menu = { opacity = 1.0; };
-        };
-      };
-    };
-
-    gvfs.enable = true; # Mount, trash, and other functionalities
-    tumbler.enable = true; # Thumbnail support for images
   };
 
   # Enable CUPS to print documents
@@ -218,7 +79,7 @@ let user = "aloshy";
 
   # Video support
   hardware = {
-    opengl.enable = true;
+    # opengl.enable = true;
     # nvidia.modesetting.enable = true;
 
     # Enable Xbox support
@@ -264,14 +125,8 @@ let user = "aloshy";
     }];
   };
 
-  fonts.packages = with pkgs; [
-    feather-font # from overlay
-  ];
-
   environment.systemPackages = with pkgs; [
     agenix.packages."${pkgs.system}".default # "x86_64-linux"
-    gitAndTools.gitFull
-    inetutils
   ];
 
   system.stateVersion = "21.05"; # Don't change this
