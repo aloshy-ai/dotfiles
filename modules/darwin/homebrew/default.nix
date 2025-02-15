@@ -16,6 +16,7 @@
 
     casks = [
       "freetube"
+      "cursor"
     ];
 
     # taps = [
