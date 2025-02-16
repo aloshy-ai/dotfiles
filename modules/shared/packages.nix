@@ -42,6 +42,7 @@ with pkgs; [
   docker
   docker-compose
   docker-credential-helpers
+  devcontainer
 
   # Text and terminal utilities
   htop
