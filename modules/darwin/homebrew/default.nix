@@ -18,6 +18,7 @@
       "freetube"
       "cursor"
       "webstorm"
+      "tailscale"
     ];
 
     # taps = [
