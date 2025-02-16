@@ -42,6 +42,7 @@ in
         vscode = {
           enable = true;
           package = pkgs.vscode;
+          mutableExtensionsDir = true;
           extensions = with pkgs.vscode-extensions; [
             bbenoist.nix
             github.vscode-github-actions
@@ -53,14 +54,14 @@ in
             esbenp.prettier-vscode
           ];
           userSettings = {
-            "window.zoomLevel" = 1;
-            "editor.fontSize" = 13;
+            "window.zoomLevel" = 0.8;
+            "editor.fontSize" = 14;
             "editor.tabSize" = 4;
-            "editor.fontFamily" = "'JetBrainsMono Nerd Font'";
+            "editor.fontFamily" = "'FiraCode Nerd Font'";
             "editor.folding" = true;
             "editor.defaultFormatter" = "esbenp.prettier-vscode";
             "editor.lineHeight" = 22;
-            "editor.fontWeight" = "500";
+            "editor.fontWeight" = "400";
             "editor.semanticHighlighting.enabled" = true;
             "editor.formatOnSave" = true;
             "files.autoSave" = "afterDelay";
