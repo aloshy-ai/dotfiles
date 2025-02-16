@@ -17,6 +17,7 @@
     casks = [
       "freetube"
       "cursor"
+      "webstorm"
     ];
 
     # taps = [

@@ -41,6 +41,7 @@ with pkgs; [
   act
   docker
   docker-compose
+  docker-credential-helpers
 
   # Text and terminal utilities
   htop
