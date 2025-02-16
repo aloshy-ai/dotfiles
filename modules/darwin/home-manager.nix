@@ -86,6 +86,10 @@ in
               "activityBarBadge.background" = "#007acc";
               "sideBarTitle.foreground" = "#bbbbbb";
             };
+            "git.autofetch" = true;
+            "git.enableSmartCommit" = true;
+            "git.confirmSync" = false;
+            "git.smartCommitChanges" = "all";
           };
         };
       } // import ../shared/home-manager.nix { inherit config pkgs lib; };
