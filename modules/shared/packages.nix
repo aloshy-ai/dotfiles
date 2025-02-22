@@ -43,7 +43,6 @@ with pkgs; [
   alejandra
 
   # Text and terminal utilities
-  starship
   htop
   jq
   tree

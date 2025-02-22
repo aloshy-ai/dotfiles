@@ -38,6 +38,7 @@ in {
 
     extraOptions = ''
       experimental-features = nix-command flakes
+      extra-platforms = x86_64-linux aarch64-linux
     '';
   };
 

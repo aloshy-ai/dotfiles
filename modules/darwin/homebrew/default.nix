@@ -19,9 +19,9 @@
       "webstorm"
       "tailscale"
       "claude"
-      "karabiner-elements"
       "docker"
       "opera"
+      "virtualbox"
     ];
 
     # taps = [
