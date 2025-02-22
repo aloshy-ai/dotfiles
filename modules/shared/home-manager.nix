@@ -37,6 +37,46 @@ let name = "aloshy.🅰🅸";
     enableZshIntegration = true;
   };
 
+  vscode = {
+          enable = true;
+          package = pkgs.vscode;
+          mutableExtensionsDir = true;
+          extensions = with pkgs.vscode-extensions; [
+            bbenoist.nix
+            github.vscode-github-actions
+            github.copilot
+            github.copilot-chat
+            github.codespaces
+            github.github-vscode-theme
+            github.vscode-pull-request-github
+            esbenp.prettier-vscode
+          ];
+          userSettings = {
+            "editor.fontFamily" = "'FiraCode Nerd Font'";
+            "editor.folding" = true;
+            "editor.defaultFormatter" = "esbenp.prettier-vscode";
+            "editor.semanticHighlighting.enabled" = true;
+            "editor.formatOnSave" = true;
+            "editor.action.moveLinesDownAction" = "shift+cmd+down";
+            "editor.action.moveLinesUpAction" = "shift+cmd+up";
+            "files.autoSave" = "afterDelay";
+            "RainbowBrackets.depreciation-notice" = false;
+            "RainbowBrackets.colorMode" = "Consecutive";
+            "breadcrumbs.enabled" = false;
+            "workbench.tree.enableStickyScroll" = false;
+            "workbench.tree.indent" = 12;
+            "workbench.tree.renderIndentGuides" = "always";
+            "workbench.sideBar.location" = "left";
+            "git.autofetch" = true;
+            "git.enableSmartCommit" = true;
+            "git.confirmSync" = false;
+            "git.smartCommitChanges" = "all";
+            "cursor.aipreview.enabled" = true;
+            "cursor.cmdk.useThemedDiffBackground" = true;
+            "cursor.cpp.enablePartialAccepts" = true;
+          };
+        };
+
   git = {
     enable = true;
     ignores = [ "*.swp" ];

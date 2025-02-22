@@ -1,7 +1,12 @@
-{ config, pkgs, agenix, secrets, ... }:
-
-let user = "aloshy"; in
 {
+  config,
+  pkgs,
+  agenix,
+  secrets,
+  ...
+}: let
+  user = "aloshy";
+in {
   age.identityPaths = [
     "/home/${user}/.ssh/id_ed25519"
   ];
@@ -20,10 +25,9 @@ let user = "aloshy"; in
   age.secrets."github-ssh-key" = {
     symlink = false;
     path = "/home/${user}/.ssh/id_github";
-    file =  "${secrets}/github-ssh-key.age";
+    file = "${secrets}/github-ssh-key.age";
     mode = "600";
     owner = "${user}";
     group = "wheel";
   };
-
 }

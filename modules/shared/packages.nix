@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{ pkgs, ... }:
 with pkgs; [
   # General packages for development and system management
   bash-completion
@@ -18,7 +17,7 @@ with pkgs; [
   yubikey-agent
   age-plugin-yubikey
   gnupg
-  libfido2  
+  libfido2
 
   # Media-related packages
   ffmpeg
@@ -39,13 +38,12 @@ with pkgs; [
   nodejs
   devbox
   act
-  docker
-  docker-compose
-  docker-credential-helpers
   devcontainer
   devpod
+  alejandra
 
   # Text and terminal utilities
+  starship
   htop
   jq
   tree

@@ -15,10 +15,13 @@
     ];
 
     casks = [
-      "freetube"
       "cursor"
       "webstorm"
       "tailscale"
+      "claude"
+      "karabiner-elements"
+      "docker"
+      "opera"
     ];
 
     # taps = [
