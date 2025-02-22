@@ -99,7 +99,6 @@
       "rollback" = mkApp "rollback" system;
     };
   in {
-    formatter = forAllSystems alejandra.defaultPackage;
     devShells = forAllSystems devShell;
     apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
@@ -165,5 +164,6 @@
           ];
         }
     );
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
 }
