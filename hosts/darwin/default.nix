@@ -112,6 +112,15 @@ in {
     ];
   };
 
-  # Ensure distributed builds are enabled
-  nix.distributedBuilds = true;
+  # Nix will perform derivations on those machines via SSH by copying the inputs to the Nix store on the remote machine, starting the build, then copying the output back to the local Nix store.
+  # nix.distributedBuilds = true;
+
+  # nix.buildMachines = [
+  #   {
+  #     hostName = "localhost";
+  #     systems = ["x86_64-darwin"];
+  #     maxJobs = 4;
+  #     supportedFeatures = ["benchmark" "big-parallel"];
+  #   }
+  # ];
 }
