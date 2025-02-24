@@ -10,7 +10,6 @@
 
     brews = [
       "nvm"
-      "colima"
     ];
 
     casks = [
