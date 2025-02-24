@@ -93,4 +93,22 @@ in {
       };
     };
   };
+
+  nix.linux-builder = {
+    enable = true;
+    maxJobs = 4; # Adjust based on your CPU
+
+    # Support both major architectures
+    systems = [
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
+
+    # Add any needed features
+    supportedFeatures = [
+      "kvm"
+      "benchmark"
+      "big-parallel"
+    ];
+  };
 }
