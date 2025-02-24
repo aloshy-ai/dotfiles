@@ -68,6 +68,8 @@
           nativeBuildInputs = with pkgs; [bashInteractive git age age-plugin-yubikey];
           shellHook = with pkgs; ''
             export EDITOR=vim
+            echo "Running formatter..."
+            nix fmt
           '';
         };
     };
@@ -164,6 +166,6 @@
           ];
         }
     );
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) (system: alejandra.defaultPackage.${system});
   };
 }

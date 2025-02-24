@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   services.karabiner-elements = {
     enable = true;
     settings = {
