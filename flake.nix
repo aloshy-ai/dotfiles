@@ -35,10 +35,6 @@
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    alejandra = {
-      url = "github:kamadorueda/alejandra";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
   outputs = {
     self,
@@ -53,7 +49,6 @@
     agenix,
     secrets,
     mac-app-util,
-    alejandra,
   } @ inputs: let
     user = "aloshy";
     linuxSystems = ["x86_64-linux" "aarch64-linux"];
@@ -166,6 +161,6 @@
           ];
         }
     );
-    formatter = nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) (system: alejandra.defaultPackage.${system});
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
 }
