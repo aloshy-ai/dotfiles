@@ -64,7 +64,7 @@
           shellHook = with pkgs; ''
             export EDITOR=vim
             echo "Running formatter..."
-            nix fmt
+            nix fmt .
           '';
         };
     };
