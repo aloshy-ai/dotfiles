@@ -111,4 +111,7 @@ in {
       "big-parallel"
     ];
   };
+
+  # Ensure distributed builds are enabled
+  nix.distributedBuilds = true;
 }
