@@ -20,7 +20,6 @@ in {
   nix = {
     package = pkgs.nix;
     settings = {
-      trusted-users = ["@admin" "${user}"];
       substituters = ["https://nix-community.cachix.org" "https://cache.nixos.org"];
       trusted-public-keys = ["cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
     };
@@ -94,33 +93,57 @@ in {
     };
   };
 
+  nix.settings = {
+    trusted-users = ["root" "@admin" "@nixbld"];
+    builders-use-substitutes = true;
+  };
+
+  # Bootstrap NixOS VM on macOS to build Linux systems
   nix.linux-builder = {
     enable = true;
-    maxJobs = 4; # Adjust based on your CPU
+    maxJobs = 4;
 
-    # Support both major architectures
     systems = [
       "aarch64-linux"
       "x86_64-linux"
     ];
 
-    # Add any needed features
     supportedFeatures = [
       "kvm"
       "benchmark"
       "big-parallel"
+      "nixos-test"
+      "uid-range"
     ];
   };
 
-  # Nix will perform derivations on those machines via SSH by copying the inputs to the Nix store on the remote machine, starting the build, then copying the output back to the local Nix store.
-  # nix.distributedBuilds = true;
+  # Log the output of the NixOS VM
+  launchd.daemons.linux-builder = {
+    serviceConfig = {
+      StandardOutPath = "/var/log/darwin-builder.log";
+      StandardErrorPath = "/var/log/darwin-builder.log";
+    };
+  };
 
-  # nix.buildMachines = [
-  #   {
-  #     hostName = "localhost";
-  #     systems = ["x86_64-darwin"];
-  #     maxJobs = 4;
-  #     supportedFeatures = ["benchmark" "big-parallel"];
-  #   }
-  # ];
+  # Set the NixOS VM as a Remote Builder for Linux Systems
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    {
+      hostName = "localhost";
+      maxJobs = 4;
+
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+
+      supportedFeatures = [
+        "kvm"
+        "benchmark"
+        "big-parallel"
+        "nixos-test"
+        "uid-range"
+      ];
+    }
+  ];
 }
