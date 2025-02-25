@@ -241,8 +241,9 @@ in {
       "workbench.activityBar.orientation" = "vertical";
       "workbench.sideBar.location" = "left";
       "workbench.tree.enableStickyScroll" = false;
-      "workbench.tree.indent" = 12;
+      "workbench.tree.indent" = 16;
       "workbench.tree.renderIndentGuides" = "always";
+      "workbench.colorTheme" = "GitHub Dark";
     };
   };
 
