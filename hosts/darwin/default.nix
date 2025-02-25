@@ -115,6 +115,8 @@ in {
       "nixos-test"
       "uid-range"
     ];
+
+
   };
 
   # Log the output of the NixOS VM
@@ -129,7 +131,7 @@ in {
   nix.distributedBuilds = true;
   nix.buildMachines = [
     {
-      hostName = "localhost";
+      hostName = "linux-builder";
       maxJobs = 4;
 
       systems = [
@@ -149,6 +151,6 @@ in {
 
   # To let $USER to read `builder` SSH Key for NixOS VM
   system.activationScripts.postUserActivation.text = ''
-    sudo chown "$USER" /etc/nix/builder_ed25519
+    sudo chown "$USER" /etc/nix/builder_ed25519*
   '';
 }
