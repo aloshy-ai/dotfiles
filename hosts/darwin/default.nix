@@ -146,4 +146,9 @@ in {
       ];
     }
   ];
+
+  # To let $USER to read `builder` SSH Key for NixOS VM
+  system.activationScripts.postUserActivation.text = ''
+    sudo chown "$USER" /etc/nix/builder_ed25519
+  '';
 }
