@@ -28,3 +28,5 @@ Public
 .lesshst
 
 .conda
+github
+.local/share/devbox
