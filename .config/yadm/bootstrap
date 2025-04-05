@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+echo "Starting yadm bootstrap process..."
+
+system_type=$(uname -s)
+
+if [ "$system_type" = "Darwin" ]; then
+  echo "Detected macOS system."
+
+  # Check for Homebrew and install if missing
+  if ! command -v brew >/dev/null 2>&1; then
+    echo "Homebrew not found. Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Add brew to PATH for the current script execution
+    # Check common install locations for different architectures
+    if [ -x "/opt/homebrew/bin/brew" ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        echo "Configured Homebrew environment (Apple Silicon)."
+    elif [ -x "/usr/local/bin/brew" ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+        echo "Configured Homebrew environment (Intel)."
+    else
+        echo "Warning: Could not find brew shellenv script after installation." >&2
+    fi
+  else
+    echo "Homebrew is already installed."
+  fi
+
+  # Process Brewfile if it exists
+  # Assuming your Brewfile is tracked by yadm at the root,
+  # it should be located at $HOME/.Brewfile
+  brewfile_path="$HOME/.Brewfile"
+  if [ -f "$brewfile_path" ]; then
+    echo "Found Brewfile at $brewfile_path. Running 'brew bundle --global'..."
+    # Ensure brew command is available before running bundle
+    if command -v brew >/dev/null 2>&1; then
+      brew bundle --global --file="$brewfile_path"
+      echo "Homebrew bundle processing finished."
+    else
+      echo "Error: 'brew' command not found, cannot process Brewfile." >&2
+      exit 1 # Exit if brew command is essential and missing
+    fi
+  else
+    echo "No Brewfile found at $brewfile_path. Skipping bundle install."
+  fi
+
+else
+  echo "Not on macOS ($system_type). Skipping Homebrew setup."
+fi
+
+echo "Yadm bootstrap process finished."
+
+# Link iCloud keychain to local keychain
+ln -s "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/iCloud.keychain-db" "/Users/$USER/Library/Keychains/iCloud.keychain-db"
