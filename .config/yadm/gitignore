@@ -1,0 +1,5 @@
+# Ignore sensitive Cursor MCP configuration
+.cursor/mcp.json
+
+# Ignore dynamic Colima SSH configuration
+.colima/ssh_config 

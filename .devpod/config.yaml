@@ -1,6 +1,6 @@
 contexts:
   default:
-    defaultIde: vscode
+    defaultIde: cursor
     defaultProvider: docker
     options:
       SSH_INJECT_DOCKER_CREDENTIALS:
@@ -11,7 +11,7 @@ contexts:
         value: "true"
     providers:
       docker:
-        creationTimestamp: "2025-03-15T23:43:27Z"
+        creationTimestamp: "2025-04-04T06:42:29Z"
         initialized: true
         options:
           DOCKER_BUILDER: {}
@@ -19,5 +19,64 @@ contexts:
           DOCKER_PATH:
             value: docker
           INACTIVITY_TIMEOUT: {}
+        singleMachine: true
+      kubernetes:
+        creationTimestamp: "2025-04-04T06:34:31Z"
+        initialized: true
+        options:
+          ARCHITECTURE: {}
+          CLUSTER_ROLE: {}
+          CREATE_NAMESPACE:
+            value: "true"
+          DISK_SIZE:
+            userProvided: true
+            value: 10Gi
+          DOCKERLESS_DISABLED:
+            value: "false"
+          DOCKERLESS_IMAGE: {}
+          INACTIVITY_TIMEOUT: {}
+          KUBERNETES_CONFIG: {}
+          KUBERNETES_CONTEXT: {}
+          KUBERNETES_NAMESPACE:
+            userProvided: true
+            value: devpod
+          KUBERNETES_PULL_SECRETS_ENABLED:
+            value: "true"
+          LABELS: {}
+          NODE_SELECTOR: {}
+          POD_MANIFEST_TEMPLATE: {}
+          POD_TIMEOUT:
+            value: 10m
+          PVC_ACCESS_MODE: {}
+          PVC_ANNOTATIONS: {}
+          RESOURCES: {}
+          SERVICE_ACCOUNT: {}
+          STORAGE_CLASS: {}
+          STRICT_SECURITY:
+            value: "false"
+          WORKSPACE_VOLUME_MOUNT: {}
+        singleMachine: true
+      ssh:
+        creationTimestamp: "2025-04-04T06:40:39Z"
+        initialized: true
+        options:
+          AGENT_PATH:
+            filled: "2025-04-04T06:42:13Z"
+            value: /tmp/aloshy/devpod/agent
+          DOCKER_PATH:
+            value: docker
+          EXTRA_FLAGS: {}
+          HOST:
+            userProvided: true
+            value: orb
+          INACTIVITY_TIMEOUT: {}
+          INJECT_DOCKER_CREDENTIALS:
+            value: "true"
+          INJECT_GIT_CREDENTIALS:
+            value: "true"
+          PORT:
+            value: "22"
+          USE_BUILTIN_SSH:
+            value: "false"
         singleMachine: true
 defaultContext: default
