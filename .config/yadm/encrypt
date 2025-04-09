@@ -1,0 +1,3 @@
+.ssh/*
+.gnupg/*
+.config/gh/hosts.yml

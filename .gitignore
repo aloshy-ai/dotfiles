@@ -30,3 +30,4 @@ Public
 .conda
 github
 .local/share/devbox
+node_modules
